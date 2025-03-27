@@ -1,6 +1,5 @@
 import { http } from "viem";
-import { sepolia 
- } from "wagmi/chains";
+import { sepolia, bsc, opBNB } from "wagmi/chains";
 const monadTestnet = {
   id: 10143,
   name: "Monad Testnet",
@@ -17,8 +16,10 @@ const monadTestnet = {
   },
 };
 
-export const chainArray = [monadTestnet, sepolia];
+export const chainArray = [monadTestnet, sepolia, bsc, opBNB];
 export const transportsObject = {
   [monadTestnet.id]: http(),
   [sepolia.id]: http(),
+  [bsc.id]: http(),
+  [opBNB.id]: http(),
 };

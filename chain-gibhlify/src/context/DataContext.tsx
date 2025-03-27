@@ -4,7 +4,7 @@ import { useAccount } from "wagmi";
 import axiosInstance from "@/config";
 interface DataContextProps {
   uploadGiblifyImage: (uname: string, file: any) => void;
-  getAllGibhlifies: () => void;
+  getAllGibhlifies: (chainId: number) => void;
   gibhlifies: any;
 }
 import { toast } from "react-hot-toast";
@@ -55,23 +55,28 @@ const DataContextProvider: React.FC<DataContextProviderProps> = ({
       return {
         success: true,
         data: response.data,
-      }
+      };
     } catch (error) {
       console.error("Upload Error:", error);
       toast.error("Ghibli Upload Failed", { id });
     }
   };
 
-  const getAllGibhlifies = async () => {
+  const getAllGibhlifies = async (chainId = 0) => {
     try {
-      let response = await axios.get("http://localhost:8080/api/all-gibhlifys");
-      console.log("Gibhlifies:", response);
+      let response;
+      let url = `http://localhost:8080/api/all-gibhlifys`;
+      if (chainId) {
+        url += `?chainId=${chainId}`;
+        response = await axios.get(url);
+      } else {
+        response = await axios.get(url);
+      }
       setGibhlifies(response?.data?.gibhlifys);
     } catch (error) {
       console.error("Error fetching gibhlifies:", error);
     }
   };
-
   useEffect(() => {
     getAllGibhlifies();
   }, []);

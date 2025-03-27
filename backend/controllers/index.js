@@ -45,9 +45,6 @@ const uploadGibhli = async (req, res) => {
 const getAllGibhlifys = async (req, res) => {
   let chainId = req.query.chainId;
   console.log("chainId:", chainId);
-  if (chainId) {
-    chainId = parseInt(chainId);
-  }
   try {
     const users = await User.find();
     if (chainId) {
@@ -60,6 +57,7 @@ const getAllGibhlifys = async (req, res) => {
           };
         })
         .filter((user) => user.images.length > 0);
+        console.log("gibhlifys:", gibhlifys);
       res.status(200).json({ gibhlifys });
     } else {
       const gibhlifys = users.map((user) => {

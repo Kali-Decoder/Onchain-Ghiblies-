@@ -23,7 +23,7 @@ const NewsTicker = () => {
   return (
     <div className="relative bg-gray-900 text-white py-2 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 flex items-center">
-        <span className="text-yellow-400 font-semibold mr-3 whitespace-nowrap">
+        <span className="text-yellow-400 pixel-font font-semibold mr-3 whitespace-nowrap">
           Chains Ghibli News:
         </span>
         <div className="w-full overflow-hidden">
@@ -34,7 +34,7 @@ const NewsTicker = () => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-sm md:text-base font-medium"
+              className="text-sm md:text-base font-medium pixel-font"
             >
               {newsHeadlines[index]}
             </motion.div>

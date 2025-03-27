@@ -8,7 +8,7 @@ const ImageGallery = () => {
   const { gibhlifies } = useDataContext();
   return (
     <>
-      <div className="image-gallery">
+      <div className="image-gallery pixel-font">
         {gibhlifies?.length > 0 ? (
           gibhlifies.map((user: any, index: number) =>
             user.images.map((img: any, imgIndex: number) => (

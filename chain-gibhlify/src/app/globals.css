@@ -11,6 +11,24 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+@font-face {
+  font-family: 'PixelifySans';
+  src: url('/fonts/PixelifySans-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PixelifySans';
+  src: url('/fonts/PixelifySans-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.pixel-font {
+  font-family: 'PixelifySans', sans-serif;
+ 
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
