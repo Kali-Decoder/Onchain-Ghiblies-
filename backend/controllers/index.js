@@ -2,8 +2,6 @@ const User = require("../schema");
 
 const uploadGibhli = async (req, res) => {
   try {
-
-
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded." });
     }
@@ -19,7 +17,9 @@ const uploadGibhli = async (req, res) => {
         chainId: chainId || 1, // Default to 1 if undefined
       });
       await user.save();
-      return res.status(200).json({ message: "Image added successfully", user });
+      return res
+        .status(200)
+        .json({ message: "Image added successfully", user });
     } else {
       // Create a new user if no existing record found
       user = new User({
@@ -43,23 +43,38 @@ const uploadGibhli = async (req, res) => {
 };
 
 const getAllGibhlifys = async (req, res) => {
+  let chainId = req.query.chainId;
+  console.log("chainId:", chainId);
+  if (chainId) {
+    chainId = parseInt(chainId);
+  }
   try {
     const users = await User.find();
-    const gibhlifys = users.map((user) => {
-      return {
-        uname: user.uname,
-        address: user.address,
-        images: user.images,
-      };
-    });
-    res.status(200).json({ gibhlifys })
-
+    if (chainId) {
+      const gibhlifys = users
+        .map((user) => {
+          return {
+            uname: user.uname,
+            address: user.address,
+            images: user.images.filter((image) => image.chainId === chainId),
+          };
+        })
+        .filter((user) => user.images.length > 0);
+      res.status(200).json({ gibhlifys });
+    } else {
+      const gibhlifys = users.map((user) => {
+        return {
+          uname: user.uname,
+          address: user.address,
+          images: user.images,
+        };
+      });
+      res.status(200).json({ gibhlifys });
+    }
   } catch (error) {
     console.error("Upload Error:", error.message);
     res.status(500).json({ error: "Server Error: " + error.message });
   }
 };
 
-
-
-module.exports = { uploadGibhli,getAllGibhlifys };
+module.exports = { uploadGibhli, getAllGibhlifys };

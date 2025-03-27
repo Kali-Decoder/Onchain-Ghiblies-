@@ -8,9 +8,7 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 require("./db");
-app.use("/", async (req, res) => {
-  res.send("Welcome to Gibhli API");
-});
+
 app.use("/api", require("./routes"));
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}`);
