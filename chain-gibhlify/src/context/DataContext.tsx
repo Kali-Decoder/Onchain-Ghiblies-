@@ -65,6 +65,7 @@ const DataContextProvider: React.FC<DataContextProviderProps> = ({
   const getAllGibhlifies = async () => {
     try {
       let response = await axios.get("http://localhost:8080/api/all-gibhlifys");
+      console.log("Gibhlifies:", response);
       setGibhlifies(response?.data?.gibhlifys);
     } catch (error) {
       console.error("Error fetching gibhlifies:", error);

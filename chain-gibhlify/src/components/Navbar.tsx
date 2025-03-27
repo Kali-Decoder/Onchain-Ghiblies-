@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useDataContext } from "@/context/DataContext";
+import Dropdown from "./DropdownChain";
 import { useAccount } from "wagmi";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +82,9 @@ const Navbar = () => {
                 >
                   Upload
                 </button>
+              </li>
+              <li className="mt-2 sm:mt-0">
+                <Dropdown />
               </li>
               <li className="mt-2 sm:mt-0">
                 <ConnectButton />

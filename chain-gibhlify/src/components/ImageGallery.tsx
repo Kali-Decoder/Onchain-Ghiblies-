@@ -9,7 +9,7 @@ const ImageGallery = () => {
   return (
     <>
       <div className="image-gallery">
-        {gibhlifies.length > 0 ? (
+        {gibhlifies?.length > 0 ? (
           gibhlifies.map((user: any, index: number) =>
             user.images.map((img: any, imgIndex: number) => (
               <div
