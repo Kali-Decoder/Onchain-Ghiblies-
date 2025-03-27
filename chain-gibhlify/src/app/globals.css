@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+  gap: 16px;
+  padding: 20px;
+}
+
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.image-wrapper > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+}
+
+.content-wrapper p {
+  padding: 0.5em 0 0 0.5em;
+  font-weight: bold;
+}
+
+.overlay {
+  cursor: zoom-in;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 16px;
+  padding: 0.75em;
+  color: white;
+  opacity: 0;
+}
+
+.overlay:hover {
+  opacity: 1;
+}
+
+.overlay div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.overlay div > p {
+  cursor: pointer;
+}
+
+.overlay div .round-button:nth-child(2) {
+  margin-left: auto;
+  margin-right: 0.7em;
+}
+.round-button {
+  width: 2.4em;
+  height: 2.4em;
+  border: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  opacity: 0.8;
+}
+
+.round-button img {
+  width: 60%;
+  height: 60%;
+}
+
+.spheric-button {
+  height: ;
+  border-radius: 50px;
+  border: none;
+  padding: 0.5em 01.25em;
+  opacity: 0.8;
+  font-weight: 800;
+}
+
+.spheric-button:hover, .round-button:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.save {
+  padding: 1em 1.5em;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+  background-color: var(--red);
+}
+
+.save:hover {
+  background-color: #ad081b;
+}
+
+
+@media (max-width: 1050px) {
+  .container-gg {
+     grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .column:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .container-gg {
+     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .column:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 550px) {
+  .container-gg {
+     grid-template-columns: 1fr;
+    gap: 3em;
+  }
+ 
+  .column:nth-child(3) {
+    display: flex;
+  }
+  
+  .column:last-child {
+    display: flex;
+  }
+  
+}
