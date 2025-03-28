@@ -2,16 +2,16 @@
 import React, { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useDataContext } from "@/context/DataContext";
-import { useAccount } from "wagmi";
+import { usePrivy } from "@privy-io/react-auth";
 const Navbar = () => {
+  const { login, logout, user } = usePrivy();
+  console.log(user);
   const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [preview, setPreview] = useState(null);
   const [progress, setProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  const { address } = useAccount();
-  console.log(address);
   const { uploadGiblifyImage } = useDataContext();
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -31,7 +31,7 @@ const Navbar = () => {
     setProgress(0);
     try {
       let response = await uploadGiblifyImage(username, selectedFile);
-      if(response?.success){
+      if (response?.success) {
         setUsername("");
         setPreview(null);
         setSelectedFile(null);
@@ -82,7 +82,7 @@ const Navbar = () => {
                   Upload
                 </button>
               </li>
-            
+
               <li className="mt-2 sm:mt-0">
                 <ConnectButton />
               </li>
@@ -94,8 +94,8 @@ const Navbar = () => {
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg bg-black/30 z-50 px-4">
           <div className="bg-black rounded-lg p-6 w-full max-w-sm md:max-w-sm lg:max-w-md shadow-lg">
             {/* Header */}
-            <div className="flex justify-between items-center">
-              <h2 className="text-lg font-medium text-white">
+            <div className="flex justify-between items-center mt-4">
+              <h2 className="text-lg font-medium text-white pixel-font">
                 Loyal to your Chain
               </h2>
               <button onClick={() => setIsOpen(false)}>
@@ -116,25 +116,19 @@ const Navbar = () => {
               </button>
             </div>
 
-            {/* Form Inputs */}
-            <div className="flex flex-col px-2 md:px-4">
-              <label className="mt-4 text-sm font-medium text-gray-300">
-                Twitter Username
-              </label>
-              <input
-                type="text"
-                className="mt-1 mb-4 rounded-md border px-3 py-2 text-white outline-none w-full"
-                placeholder="Enter your username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-              <div className="mt-4">
+            <div className="flex flex-col px-2 md:px-4 mt-8">
+              <button
+                className=" w-2/3 text-white text-sm px-11 py-2 border-[2px] pixel-corners border-white cursor-pointer pixel-font"
+                onClick={login}
+              >
+                Login with Twitter
+              </button>
+              <div className="mt-6">
                 <ConnectButton />
               </div>
-
               {/* File Upload */}
               <div
-                className="relative border-2 mt-8 border-dashed rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-gray-800"
+                className="relative mt-8 border-[4px] pixel-corners pixel-font rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-gray-800"
                 onClick={() => document.getElementById("fileInput").click()}
               >
                 <p className="text-gray-500 mt-2 text-center">
@@ -176,7 +170,7 @@ const Navbar = () => {
             <div className="flex justify-end pt-4">
               <button
                 onClick={uploadFile}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
               >
                 Upload
               </button>
