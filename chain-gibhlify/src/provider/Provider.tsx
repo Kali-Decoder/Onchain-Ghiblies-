@@ -13,7 +13,7 @@ const Providers = ({ children }) => {
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider>
             <PrivyProvider
-              appId="cm8t4hd3y01pldq95nknwya40"
+              appId={`${process.env.NEXT_PUBLIC_PRIVY_APP_ID}`}
               config={{
                 appearance: {
                   theme: "light",

@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useDataContext } from "@/context/DataContext";
 import { usePrivy } from "@privy-io/react-auth";
+import { toast } from "react-hot-toast";
+import { useAccount } from "wagmi";
 const Navbar = () => {
   const { login, logout, user } = usePrivy();
-  console.log(user);
+  const { address } = useAccount();
   const [isOpen, setIsOpen] = useState(false);
   const [username, setUsername] = useState("");
   const [preview, setPreview] = useState(null);
@@ -22,7 +24,16 @@ const Navbar = () => {
     setPreview(URL.createObjectURL(file));
   };
 
-  const uploadFile = async (file: any) => {
+  console.log(user)
+  const uploadFile = async () => {
+    if (!user?.twitter?.name) {
+      toast.error("Please Connect to Twitter first");
+      return;
+    }
+    if (!address) {
+      toast.error("Please Connect to Wallet first");
+      return;
+    }
     if (!selectedFile) {
       alert("Please select a file first.");
       return;
@@ -30,7 +41,10 @@ const Navbar = () => {
     setIsUploading(true);
     setProgress(0);
     try {
-      let response = await uploadGiblifyImage(username, selectedFile);
+      let response = await uploadGiblifyImage(
+        user?.twitter?.username,
+        selectedFile
+      );
       if (response?.success) {
         setUsername("");
         setPreview(null);
@@ -118,15 +132,11 @@ const Navbar = () => {
 
             <div className="flex flex-col px-2 md:px-4 mt-8">
               <button
-                className=" w-2/3 text-white text-sm px-11 py-2 border-[2px] pixel-corners border-white cursor-pointer pixel-font"
+                className=" w-full text-white whitespace-nowrap text-sm px-11 py-2 border-[2px] pixel-corners border-white cursor-pointer pixel-font"
                 onClick={login}
               >
-                Login with Twitter
+                {user?.twitter ? user?.twitter?.name : "Login with Twitter"}
               </button>
-              <div className="mt-6">
-                <ConnectButton />
-              </div>
-              {/* File Upload */}
               <div
                 className="relative mt-8 border-[4px] pixel-corners pixel-font rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-gray-800"
                 onClick={() => document.getElementById("fileInput").click()}
@@ -167,10 +177,10 @@ const Navbar = () => {
             </div>
 
             {/* Footer */}
-            <div className="flex justify-end pt-4">
+            <div className="flex justify-end mt-8">
               <button
+                className=" w-1/3 text-white text-sm px-11 py-2 border-[2px] pixel-corners border-white cursor-pointer pixel-font"
                 onClick={uploadFile}
-                className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
               >
                 Upload
               </button>
